@@ -1,0 +1,25 @@
+services:
+  web:
+    build: 
+      context: ./dockerfiles/
+      dockerfile: Dockerfile-local
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app:/app
+    environment:
+      - VIEWS_DIR=/app/internal/views
+    depends_on:
+      - db
+    entrypoint: "./dev-entrypoint.sh"
+  db:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: zuruck
+      POSTGRES_DB: document_platform_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+volumes:
+  db-data:
