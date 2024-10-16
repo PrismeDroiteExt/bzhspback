@@ -1,25 +1,43 @@
 services:
   back:
-    build: 
+    build:
       context: ./dockerfiles/
       dockerfile: Dockerfile-local
+    restart: unless-stopped
     ports:
       - "8080:8080"
     volumes:
       - ./app:/app
     environment:
-      - VIEWS_DIR=/app/internal/views
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=5432
+      - DB_SSLMODE=disable
+      - DB_TIMEZONE=${TIMEZONE}
+      - GIN_MODE=${GIN_MODE}
     depends_on:
       - db
     entrypoint: "./scripts/dev-entrypoint.sh"
   db:
     image: postgres:17
-    restart: always
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: zuruck
-      POSTGRES_DB: document_platform_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
-      - db-data:/var/lib/postgresql/data
-volumes:
-  db-data:
+      - ./db-data:/var/lib/postgresql/data
+  cloudbeaver:
+    image: dbeaver/cloudbeaver:latest
+    restart: unless-stopped
+    ports:
+      - "8978:8978"
+    volumes:
+      - ./cloudbeaver/workspace:/opt/cloudbeaver/workspace
+    # environment:
+    #   - CB_ADMIN_NAME=${CB_ADMIN_NAME}
+    #   - CB_ADMIN_PASSWORD=${CB_ADMIN_PASSWORD}
+    depends_on:
+      - db

@@ -13,6 +13,13 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+# Environment files
+.env
+
+# Database
+db-data
+cloudbeaver
+
 # Mono auto generated files
 mono_crash.*
 
