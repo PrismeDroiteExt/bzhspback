@@ -7,6 +7,7 @@ import (
 type Cart struct {
 	gorm.Model
 
-	UserId      User `gorm:"references:ID"`
+	UserID      uint `gorm:"references:ID"`
+	User        User `gorm:"foreignKey:UserID"`
 	IsProcessed bool `gorm:"not null"`
 }
