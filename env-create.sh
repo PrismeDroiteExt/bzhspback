@@ -33,17 +33,17 @@ if [ -z "${DB_PORT}" ]
     fi
 fi
 
-read -p "What is the name of your CloudBeaver admin user? (default administrator) " CB_ADMIN_NAME
-if [ -z "${CB_ADMIN_NAME}" ]
-    then
-    CB_ADMIN_NAME="'administrator'"
-fi
+# read -p "What is the name of your CloudBeaver admin user? (default administrator) " CB_ADMIN_NAME
+# if [ -z "${CB_ADMIN_NAME}" ]
+#     then
+#     CB_ADMIN_NAME="'administrator'"
+# fi
 
-read -p "What is the password of your CloudBeaver admin user? (default S0mePazzworD) " CB_ADMIN_PASSWORD
-if [ -z "${CB_ADMIN_PASSWORD}" ]
-    then
-    CB_ADMIN_PASSWORD="'S0mePazzworD'"
-fi
+# read -p "What is the password of your CloudBeaver admin user? (default S0mePazzworD) " CB_ADMIN_PASSWORD
+# if [ -z "${CB_ADMIN_PASSWORD}" ]
+#     then
+#     CB_ADMIN_PASSWORD="'S0mePazzworD'"
+# fi
 
 read -p "What Timezone to use? (default Europe/Paris) " TIMEZONE
 if [ -z "${TIMEZONE}" ]
@@ -78,7 +78,7 @@ DB_NAME=${DB_NAME}
 TIMEZONE=${TIMEZONE}
 DB_SSLMODE=${DB_SSLMODE}
 DB_PORT=${DB_PORT}
-CB_ADMIN_NAME=${CB_ADMIN_NAME}
-CB_ADMIN_PASSWORD=${CB_ADMIN_PASSWORD}
+# CB_ADMIN_NAME=${CB_ADMIN_NAME}
+# CB_ADMIN_PASSWORD=${CB_ADMIN_PASSWORD}
 GIN_MODE=${GIN_MODE}
 EOL
