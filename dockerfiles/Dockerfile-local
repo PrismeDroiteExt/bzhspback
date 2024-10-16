@@ -2,6 +2,5 @@
 FROM golang:1.23.2-alpine
 # Set the Current Working Directory inside the container
 WORKDIR /app
-ENV VIEWS_DIR=/internal/views
 ENV GIN_MODE=debug
 EXPOSE 8080
