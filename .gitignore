@@ -18,6 +18,7 @@
 
 # Database
 db-data
+cloudbeaver
 
 # Mono auto generated files
 mono_crash.*
