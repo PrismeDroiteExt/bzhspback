@@ -10,7 +10,8 @@ func main() {
 	r := gin.Default()
 
 	database.InitDB()
-	api.InitRoutes(r)
+	db := database.GetDB()
+	api.InitRoutes(r, db)
 
 	r.Run()
 }
