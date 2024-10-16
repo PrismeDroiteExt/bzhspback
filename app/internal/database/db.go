@@ -6,7 +6,6 @@ import (
 	"os"
 
 	"bzhspback.fr/breizhsport/internal/models"
-	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -14,12 +13,6 @@ import (
 var DB *gorm.DB
 
 func InitDB() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	fmt.Println("Attempting to connect to database")
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s TimeZone=%s",
 		os.Getenv("DB_HOST"),
@@ -30,20 +23,16 @@ func InitDB() {
 		os.Getenv("DB_SSLMODE"),
 		os.Getenv("DB_TIMEZONE"),
 	)
-
+	var err error
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
-	} else {
-		fmt.Println("Connected to database")
 	}
 
 	// Auto Migrate
-	err = DB.AutoMigrate(&models.Category{}, &models.Product{}, &models.User{}, &models.Order{}, &models.Brand{}, &models.Cart{}, &models.CartItem{}, &models.Payment{})
+	err = DB.AutoMigrate(&models.User{}, &models.Product{}, &models.Category{}, &models.Order{}, &models.Brand{}, &models.Cart{}, &models.CartItem{}, &models.Payment{})
 	if err != nil {
 		log.Fatal("Failed to auto migrate:", err)
-	} else {
-		fmt.Println("Auto migrated database")
 	}
 }
 

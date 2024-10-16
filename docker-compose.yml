@@ -8,7 +8,6 @@ services:
       - "8080:8080"
     volumes:
       - ./app:/app
-      - .env:/app/.env
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
