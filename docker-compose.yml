@@ -1,6 +1,6 @@
 services:
   back:
-    build: 
+    build:
       context: ./dockerfiles/
       dockerfile: Dockerfile-local
     restart: unless-stopped
@@ -11,13 +11,13 @@ services:
       - .env:/app/.env
     environment:
       - VIEWS_DIR=/app/internal/views
-      - DB_HOST=db
+      - DB_HOST=${DB_CONTAINER_NAME}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
       - DB_PORT=5432
       - DB_SSLMODE=disable
-      - DB_TIMEZONE=UTC
+      - DB_TIMEZONE=${TIMEZONE}
     depends_on:
       - db
     entrypoint: "./scripts/dev-entrypoint.sh"
