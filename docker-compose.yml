@@ -36,8 +36,8 @@ services:
       - "8978:8978"
     volumes:
       - ./cloudbeaver/workspace:/opt/cloudbeaver/workspace
-    environment:
-      - CB_ADMIN_NAME=${CB_ADMIN_NAME}
-      - CB_ADMIN_PASSWORD=${CB_ADMIN_PASSWORD}
+    # environment:
+    #   - CB_ADMIN_NAME=${CB_ADMIN_NAME}
+    #   - CB_ADMIN_PASSWORD=${CB_ADMIN_PASSWORD}
     depends_on:
       - db
