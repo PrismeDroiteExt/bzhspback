@@ -39,7 +39,7 @@ func InitDB() {
 	}
 
 	// Auto Migrate
-	err = DB.AutoMigrate(&models.User{}, &models.Article{})
+	err = DB.AutoMigrate(&models.Category{}, &models.Product{}, &models.User{}, &models.Order{}, &models.Brand{}, &models.Cart{}, &models.CartItem{}, &models.Payment{})
 	if err != nil {
 		log.Fatal("Failed to auto migrate:", err)
 	} else {

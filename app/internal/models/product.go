@@ -9,7 +9,8 @@ type Product struct {
 
 	Title       string   `gorm:"not null"`
 	Description string   `gorm:"not null"`
-	CategoryId  Category `gorm:"not null"`
+	CategoryID  uint     `gorm:"not null"`
+	Category    Category `gorm:"foreignKey:CategoryID"`
 	Price       float64  `gorm:"not null"`
 	Discount    float64  `gorm:"not null"`
 	Colors      string   `gorm:"not null"`

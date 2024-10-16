@@ -7,8 +7,10 @@ import (
 type Payment struct {
 	gorm.Model
 
-	OrderId       uint   `gorm:"not null"`
-	UserId        uint   `gorm:"not null"`
+	OrderID       uint   `gorm:"not null"`
+	Order         Order  `gorm:"foreignKey:OrderID"`
+	UserID        uint   `gorm:"not null"`
+	User          User   `gorm:"foreignKey:UserID"`
 	Status        string `gorm:"not null"`
 	PaymentMethod string `gorm:"not null"`
 	TransationId  string `gorm:"not null"`

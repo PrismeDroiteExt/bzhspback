@@ -7,6 +7,7 @@ import (
 type Order struct {
 	gorm.Model
 
-	CartId uint   `gorm:"not null"`
+	CartID uint   `gorm:"not null"`
+	Cart   Cart   `gorm:"foreignKey:CartID"`
 	Status string `gorm:"not null"`
 }
