@@ -5,9 +5,13 @@ import (
 )
 
 func SetupRoutes(r *gin.Engine) {
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello, World!",
+
+	apiv1 := r.Group("/api/v1")
+	{
+		apiv1.GET("/users", func(c *gin.Context) {
+			c.JSON(200, gin.H{
+				"users": "To be implemented",
+			})
 		})
-	})
+	}
 }
