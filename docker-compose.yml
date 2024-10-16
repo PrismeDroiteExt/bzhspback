@@ -3,23 +3,32 @@ services:
     build: 
       context: ./dockerfiles/
       dockerfile: Dockerfile-local
+    restart: unless-stopped
     ports:
       - "8080:8080"
     volumes:
       - ./app:/app
+      - .env:/app/.env
     environment:
       - VIEWS_DIR=/app/internal/views
+      - DB_HOST=db
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=5432
+      - DB_SSLMODE=disable
+      - DB_TIMEZONE=UTC
     depends_on:
       - db
     entrypoint: "./scripts/dev-entrypoint.sh"
   db:
     image: postgres:17
-    restart: always
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: zuruck
-      POSTGRES_DB: document_platform_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
-      - db-data:/var/lib/postgresql/data
-volumes:
-  db-data:
+      - ./db-data:/var/lib/postgresql/data
