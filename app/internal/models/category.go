@@ -11,5 +11,5 @@ type Category struct {
 	PictureUrl  string    `gorm:"not null"`
 	Description string    `gorm:"not null"`
 	CategoryID  *uint     `gorm:"default:null"`
-	Category    *Category `gorm:"foreignKey:CategoryID"`
+	Category    *Category `gorm:"foreignKey:CategoryID;nullable"`
 }
