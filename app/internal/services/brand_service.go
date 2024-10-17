@@ -37,6 +37,7 @@ func (s *BrandService) GetAllBrands() ([]dto.BrandResponse, error) {
 // Get Brand by ID
 func (s *BrandService) GetBrandByID(id uint) (dto.BrandResponse, error) {
 	brand, err := s.repo.GetBrandByID(id)
+	
 	if err != nil {
 		return dto.BrandResponse{}, err
 	}
