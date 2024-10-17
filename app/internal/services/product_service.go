@@ -36,17 +36,14 @@ func (s *ProductService) GetProductByID(id uint) (dto.ProductResponse, error) {
 }
 
 // Get all products for a category
-func (s *ProductService) GetProductsByCategoryID(categoryID uint) ([]dto.ProductResponse, error) {
-	products, err := s.repo.GetProductsByCategoryID(categoryID)
-
+func (s *ProductService) GetProductsByCategoryID(categoryID uint, filterRequest dto.FilterRequest) ([]dto.ProductResponse, error) {
+	products, err := s.repo.GetProductsByCategoryID(categoryID, filterRequest.Filters)
 	if err != nil {
 		return []dto.ProductResponse{}, err
 	}
 
 	var productDTOs []dto.ProductResponse
-
 	err = copier.Copy(&productDTOs, &products)
-
 	if err != nil {
 		return []dto.ProductResponse{}, err
 	}

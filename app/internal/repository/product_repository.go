@@ -1,6 +1,9 @@
 package repository
 
 import (
+	"fmt"
+
+	"bzhspback.fr/breizhsport/internal/dto"
 	"bzhspback.fr/breizhsport/internal/models"
 	"gorm.io/gorm"
 )
@@ -25,7 +28,7 @@ func (r *ProductRepository) GetProductByID(id uint) (models.Product, error) {
 }
 
 // Get all products for a category
-func (r *ProductRepository) GetProductsByCategoryID(categoryID uint) ([]models.Product, error) {
+func (r *ProductRepository) GetProductsByCategoryID(categoryID uint, filters []dto.Filter) ([]models.Product, error) {
 	var products []models.Product
 
 	query := `
@@ -35,11 +38,36 @@ func (r *ProductRepository) GetProductsByCategoryID(categoryID uint) ([]models.P
 			SELECT c.id FROM categories c
 			INNER JOIN category_tree ct ON c.sub_category_id = ct.id
 		)
-		SELECT p.* FROM products p
+		SELECT DISTINCT p.* FROM products p
 		INNER JOIN category_tree ct ON p.category_id = ct.id
+		WHERE 1=1
 	`
+	args := []interface{}{categoryID}
 
-	result := r.DB.Raw(query, categoryID).Preload("Brand").Preload("Category").Find(&products)
+	for _, filter := range filters {
+		switch filter.Field {
+		case "brand_id":
+			query += " AND p.brand_id IN (?)"
+			args = append(args, filter.Value)
+		case "min_price":
+			query += " AND p.price >= ?"
+			args = append(args, filter.Value)
+		case "max_price":
+			query += " AND p.price <= ?"
+			args = append(args, filter.Value)
+		case "colors", "sizes":
+			query += fmt.Sprintf(" AND string_to_array(p.%s, ',') && string_to_array(?, ',')", filter.Field)
+			if str, ok := filter.Value.(string); ok {
+				args = append(args, str)
+			} else {
+				return nil, fmt.Errorf("invalid type for %s filter: expected string", filter.Field)
+			}
+		}
+	}
+
+	// TODO: implement the pagination et the limit
+
+	result := r.DB.Raw(query, args...).Preload("Brand").Preload("Category").Find(&products)
 
 	return products, result.Error
 }
