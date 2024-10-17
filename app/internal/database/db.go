@@ -23,6 +23,7 @@ func InitDB() {
 		os.Getenv("DB_SSLMODE"),
 		os.Getenv("DB_TIMEZONE"),
 	)
+
 	var err error
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
