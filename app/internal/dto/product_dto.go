@@ -8,10 +8,12 @@ type ProductResponse struct {
 	Discount    float64          `json:"discount"`
 	Colors      string           `json:"colors"`
 	Sizes       string           `json:"sizes"`
-	PictureUrl  string           `json:"picture_url"`
+	Brand       BrandResponse    `json:"brand"`
 	Category    CategoryResponse `json:"category"`
+	PictureUrl  string           `json:"picture_url"`
 }
 
+// TODO: Delete this struct definition when the Category model is created
 // Add this struct definition
 type CategoryResponse struct {
 	ID   uint   `json:"id"`
