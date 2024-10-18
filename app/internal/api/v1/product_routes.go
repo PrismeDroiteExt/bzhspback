@@ -14,12 +14,7 @@ func SetupProductRoutes(router *gin.RouterGroup, controller *controllers.Product
 		// GET /brands - Retrieves all brands
 		productRoutes.GET("/:id", controller.GetProductByID)
 		productRoutes.GET("/category/:category_id", controller.GetProductsByCategoryID)
-
-		// TODO: Add more brand-related routes here as needed
-		// For example:
-		// brandRoutes.GET("/:id", controller.GetBrandByID)
-		// brandRoutes.POST("", controller.CreateBrand)
-		// brandRoutes.PUT("/:id", controller.UpdateBrand)
-		// brandRoutes.DELETE("/:id", controller.DeleteBrand)
+		productRoutes.GET("/recommended", controller.GetRecommendedProducts)
+		productRoutes.GET("/search", controller.GetProductsByNameOrDescription)
 	}
 }

@@ -50,3 +50,35 @@ func (s *ProductService) GetProductsByCategoryID(categoryID uint, filterRequest 
 
 	return productDTOs, nil
 }
+
+// Get all recommended products
+func (s *ProductService) GetRecommendedProducts() ([]dto.ProductResponse, error) {
+	products, err := s.repo.GetRecommendedProducts()
+	if err != nil {
+		return []dto.ProductResponse{}, err
+	}
+
+	var productDTOs []dto.ProductResponse
+	err = copier.Copy(&productDTOs, &products)
+	if err != nil {
+		return []dto.ProductResponse{}, err
+	}
+
+	return productDTOs, nil
+}
+
+// Get all products for a name or a description, with filters on the products
+func (s *ProductService) GetProductsByNameOrDescription(nameOrDescription string, filterRequest dto.FilterRequest) ([]dto.ProductResponse, error) {
+	products, err := s.repo.GetProductsByNameOrDescription(nameOrDescription, filterRequest.Filters)
+	if err != nil {
+		return []dto.ProductResponse{}, err
+	}
+
+	var productDTOs []dto.ProductResponse
+	err = copier.Copy(&productDTOs, &products)
+	if err != nil {
+		return []dto.ProductResponse{}, err
+	}
+
+	return productDTOs, nil
+}
