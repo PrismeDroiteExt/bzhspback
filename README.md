@@ -85,17 +85,7 @@ You can use tools like cURL, Postman, or any HTTP client to make requests to the
 
 3. Get products by category ID with filters:
    ```
-   curl -X POST http://localhost:8080/api/v1/products/category/1 \
-   -H "Content-Type: application/json" \
-   -d '{
-   	"filters": [
-   	  {"field": "brand_id", "value": [1, 2, 3]},
-   	  {"field": "min_price", "value": 50},
-   	  {"field": "max_price", "value": 100},
-   	  {"field": "colors", "value": "red,blue"},
-   	  {"field": "sizes", "value": "M,L"}
-   	]
-   }'
+   curl "http://localhost:8080/api/v1/products/category/1?brand=1,2,3&min_price=50&max_price=100&colors=red,blue&sizes=M,L"
    ```
 
 ## Development

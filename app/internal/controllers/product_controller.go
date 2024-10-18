@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"strconv"
+	"strings"
 
 	"bzhspback.fr/breizhsport/internal/dto"
 	"bzhspback.fr/breizhsport/internal/services"
@@ -47,11 +48,34 @@ func (c *ProductController) GetProductsByCategoryID(ctx *gin.Context) {
 		return
 	}
 
-	// get filters from body
+	// Parse query parameters
 	var filterRequest dto.FilterRequest
-	if err := ctx.ShouldBindJSON(&filterRequest); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid filter format"})
-		return
+	filterRequest.Filters = make([]dto.Filter, 0)
+
+	// Handle brand
+	if brandIDsStr := ctx.Query("brand"); brandIDsStr != "" {
+		brandIDs := strings.Split(brandIDsStr, ",")
+		filterRequest.Filters = append(filterRequest.Filters, dto.Filter{Field: "brand_id", Value: brandIDs})
+	}
+
+	// Handle min_price
+	if minPrice := ctx.Query("min_price"); minPrice != "" {
+		filterRequest.Filters = append(filterRequest.Filters, dto.Filter{Field: "min_price", Value: minPrice})
+	}
+
+	// Handle max_price
+	if maxPrice := ctx.Query("max_price"); maxPrice != "" {
+		filterRequest.Filters = append(filterRequest.Filters, dto.Filter{Field: "max_price", Value: maxPrice})
+	}
+
+	// Handle colors
+	if colors := ctx.Query("colors"); colors != "" {
+		filterRequest.Filters = append(filterRequest.Filters, dto.Filter{Field: "colors", Value: colors})
+	}
+
+	// Handle sizes
+	if sizes := ctx.Query("sizes"); sizes != "" {
+		filterRequest.Filters = append(filterRequest.Filters, dto.Filter{Field: "sizes", Value: sizes})
 	}
 
 	products, err := c.service.GetProductsByCategoryID(uint(categoryID), filterRequest)
