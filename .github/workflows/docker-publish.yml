@@ -34,10 +34,10 @@ jobs:
           go-version: '1.23'
 
       - name: Install dependencies
-        run: go mod download
+        run: cd app && go mod download
 
       - name: Run tests
-        run: go test -v ./internal/tests
+        run: cd app && go test -v ./internal/tests
 
   build:
     needs: test  # This ensures build only runs if tests pass
