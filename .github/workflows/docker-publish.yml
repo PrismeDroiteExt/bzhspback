@@ -22,7 +22,25 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23'
+
+      - name: Install dependencies
+        run: cd app && go mod download
+
+      - name: Run tests
+        run: cd app && go test -v ./internal/tests
+
   build:
+    needs: test  # This ensures build only runs if tests pass
     runs-on: ubuntu-latest
     permissions:
       contents: read
