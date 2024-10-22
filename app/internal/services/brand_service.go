@@ -8,11 +8,11 @@ import (
 
 // BrandService struct represents a service for managing brand data.
 type BrandService struct {
-	repo *repository.BrandRepository
+	repo repository.BrandRepository
 }
 
 // Constructor
-func NewBrandService(repo *repository.BrandRepository) *BrandService {
+func NewBrandService(repo repository.BrandRepository) *BrandService {
 	return &BrandService{repo: repo}
 }
 
@@ -37,7 +37,7 @@ func (s *BrandService) GetAllBrands() ([]dto.BrandResponse, error) {
 // Get Brand by ID
 func (s *BrandService) GetBrandByID(id uint) (dto.BrandResponse, error) {
 	brand, err := s.repo.GetBrandByID(id)
-	
+
 	if err != nil {
 		return dto.BrandResponse{}, err
 	}
