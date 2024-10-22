@@ -13,5 +13,5 @@ type Payment struct {
 	User          User   `gorm:"foreignKey:UserID"`
 	Status        string `gorm:"not null"`
 	PaymentMethod string `gorm:"not null"`
-	TransationId  string `gorm:"not null"`
+	TransactionId string `gorm:"not null"`
 }

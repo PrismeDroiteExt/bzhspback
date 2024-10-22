@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bzhspback.fr/breizhsport/internal/api"
+	"bzhspback.fr/breizhsport/internal/api/v1"
 	"bzhspback.fr/breizhsport/internal/database"
 	"github.com/gin-gonic/gin"
 )

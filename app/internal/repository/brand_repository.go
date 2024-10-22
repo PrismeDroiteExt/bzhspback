@@ -5,25 +5,30 @@ import (
 	"gorm.io/gorm"
 )
 
-// BrandRepository struct represents a repository for managing brand data.
-type BrandRepository struct {
+type BrandRepository interface {
+	GetAllBrands() ([]models.Brand, error)
+	GetBrandByID(id uint) (models.Brand, error)
+}
+
+// BrandRepositoryImpl struct represents a repository for managing brand data.
+type BrandRepositoryImpl struct {
 	DB *gorm.DB
 }
 
-// Constructor for the BrandRepository struct.
-func NewBrandRepository(db *gorm.DB) *BrandRepository {
-	return &BrandRepository{DB: db}
+// Constructor for the BrandRepositoryImpl struct.
+func NewBrandRepository(db *gorm.DB) BrandRepository {
+	return &BrandRepositoryImpl{DB: db}
 }
 
 // GetAllBrands retrieves all brands from the database.
-func (r *BrandRepository) GetAllBrands() ([]models.Brand, error) {
+func (r *BrandRepositoryImpl) GetAllBrands() ([]models.Brand, error) {
 	var brands []models.Brand
 	result := r.DB.Find(&brands)
 	return brands, result.Error
 }
 
 // Get Brand by ID
-func (r *BrandRepository) GetBrandByID(id uint) (models.Brand, error) {
+func (r *BrandRepositoryImpl) GetBrandByID(id uint) (models.Brand, error) {
 	var brand models.Brand
 	result := r.DB.First(&brand, id)
 	return brand, result.Error
