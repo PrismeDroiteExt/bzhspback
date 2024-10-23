@@ -1,8 +1,8 @@
 services:
   back:
     build:
-      context: ./dockerfiles/
-      dockerfile: Dockerfile-local
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile-local
     restart: unless-stopped
     ports:
       - "8080:8080"
@@ -29,6 +29,7 @@ services:
       POSTGRES_DB: ${DB_NAME}
     volumes:
       - ./db-data:/var/lib/postgresql/data
+      - ./test.sql:/docker-entrypoint-initdb.d/test.sql
   cloudbeaver:
     image: dbeaver/cloudbeaver:latest
     restart: unless-stopped
